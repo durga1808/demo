@@ -71,6 +71,10 @@ public class ProductServiceImpl implements ProductService{
                 .filter(product -> product.getProductCategories() != null && !product.getProductCategories().isEmpty())
                 .map(product -> product.getProductCategories().get(0).getPrice())
                 .collect(Collectors.toList());
+
+                // .filter(product -> product.getAddress() != null && !product.getAddress()isEmpty())
+                // .map(product -> product.getAddress().get(0).getCity())
+                // .collect(Collectors.toList());
         }  
     }
 
