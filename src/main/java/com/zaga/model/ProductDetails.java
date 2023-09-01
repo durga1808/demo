@@ -1,5 +1,6 @@
 package com.zaga.model;
 
+import java.time.LocalDateTime;
 import java.util.List;
 
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
@@ -20,4 +21,5 @@ public class ProductDetails extends PanacheMongoEntity{
     public String lastname;
     public List<Address> address;
     public List<ProductCategory> productCategories;
+    public String time;
 }

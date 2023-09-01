@@ -33,7 +33,7 @@ public class ProductResource {
     
     @POST
     @Path("/create")
-    public Response createProduvct(ProductDetails product) {
+    public Response createProduct(ProductDetails product) {
         try {
             //System.out.println("----------------");
             productService.createProduct(product);
@@ -42,6 +42,29 @@ public class ProductResource {
             return Response.status(500).entity(e.getMessage()).build();
         }
     }
+
+    // @POST
+    // @Path("/create/{timeUnixNano}")
+    // public Response createProductWithUnix(ProductDetails product, @PathParam("timeUnixNano") String timeUnixNano) {
+    //     try {
+    //         //System.out.println("----------------");
+    //         productService.createProduct(product);
+    //         return Response.status(200).entity(product).build();
+    //     } catch (Exception e) {
+    //         return Response.status(500).entity(e.getMessage()).build();
+    //     }
+    // }
+
+    // @POST
+    // @Path("/peristtime")
+    // public Response saveProductDetails(ProductDetails productDetails) {
+    //     try {
+    //         productService.saveProductDetails(null, null, null, null, 0);
+    //         return Response.status(200).entity(productDetails).build();
+    //     } catch (Exception e) {
+    //         return Response.status(500).entity(e.getMessage()).build();
+    //     }
+    // }
 
     @GET
     @Path("/listallproductdetails")
@@ -93,7 +116,7 @@ public class ProductResource {
 
         @GET
         @Path("/aggregation/{firstname}")
-      public List<String> customAggregationEndpoint(@PathParam("firstname") String firstname) {
+      public List<Document> customAggregationEndpoint(@PathParam("firstname") String firstname) {
             return productService.customAggregationPipeline(firstname);
         } 
         

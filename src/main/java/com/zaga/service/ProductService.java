@@ -5,6 +5,8 @@ import java.util.Map;
 
 import org.bson.Document;
 
+import com.zaga.model.Address;
+import com.zaga.model.ProductCategory;
 import com.zaga.model.ProductDetails;
 
 import jakarta.enterprise.context.ApplicationScoped;
@@ -13,6 +15,8 @@ import jakarta.enterprise.context.ApplicationScoped;
 @ApplicationScoped
 public interface ProductService {
     void createProduct(ProductDetails product);
+
+    // void saveProductDetails(String firstname, String lastname, List<Address> addressList, List<ProductCategory> productCategories, long unixNanoTimestamp);
 
     List<ProductDetails> getallProducts();
 
@@ -26,9 +30,11 @@ public interface ProductService {
 
     List<ProductDetails> getByCategory(String category);
 
-    List<String> customAggregationPipeline(String firstname);
+    List<Document> customAggregationPipeline(String firstname);
 
     List<Map<String, Object>> getProductDetailsByFirstName(String firstname);
+
+    List<Document> aggregateDocuments() ;
     
   
 }
