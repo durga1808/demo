@@ -1,6 +1,7 @@
 package com.zaga.controller;
 
 import java.util.List;
+import java.util.Map;
 
 import org.bson.Document;
 
@@ -92,11 +93,14 @@ public class ProductResource {
 
         @GET
         @Path("/aggregation/{firstname}")
-      public List<Double> customAggregationEndpoint(@PathParam("firstname") String firstname) {
+      public List<String> customAggregationEndpoint(@PathParam("firstname") String firstname) {
             return productService.customAggregationPipeline(firstname);
-        }        
-
-      
-
-
-}
+        } 
+        
+        
+        @GET
+        @Path("/getspecificinfo/{firstname}")
+        public List<Map<String, Object>> getProductInfoByProductName(@PathParam("firstname") String firstname) {
+            return productService.getProductDetailsByFirstName(firstname);
+        }
+    }

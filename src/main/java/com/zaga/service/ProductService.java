@@ -1,6 +1,7 @@
 package com.zaga.service;
 
 import java.util.List;
+import java.util.Map;
 
 import org.bson.Document;
 
@@ -25,7 +26,9 @@ public interface ProductService {
 
     List<ProductDetails> getByCategory(String category);
 
-    List<Double> customAggregationPipeline(String firstname);
+    List<String> customAggregationPipeline(String firstname);
+
+    List<Map<String, Object>> getProductDetailsByFirstName(String firstname);
     
   
 }

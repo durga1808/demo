@@ -2,7 +2,9 @@ package com.zaga.serviceimplementation;
 
 import java.util.ArrayList;
 import java.util.Arrays;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 import java.util.stream.Collectors;
 
 import org.bson.Document;
@@ -63,19 +65,45 @@ public class ProductServiceImpl implements ProductService{
     }
 
     @Override
-    public List<Double> customAggregationPipeline(String firstname) {
+    public List<String> customAggregationPipeline(String firstname) {
     
             List<ProductDetails> products = productRepo.findByFirstName(firstname);
             return products.stream()
             
                 .filter(product -> product.getProductCategories() != null && !product.getProductCategories().isEmpty())
-                .map(product -> product.getProductCategories().get(0).getPrice())
+                .map(product -> product.getProductCategories().get(0).getName())
+                //.map(product -> product.getProductCategories().get(0).getPrice())
                 .collect(Collectors.toList());
 
-                // .filter(product -> product.getAddress() != null && !product.getAddress()isEmpty())
-                // .map(product -> product.getAddress().get(0).getCity())
-                // .collect(Collectors.toList());
+                // List<ProductDetails> products = productRepo.findByFirstName(firstname);
+                // return products.stream()
+                //     .filter(product -> product.getAddress() != null && !product.getAddress().isEmpty())
+                //     .map(product -> product.getAddress().get(0).getCity())
+                //     .collect(Collectors.toList());
+            
         }  
+
+
+    @Override
+    public List<Map<String, Object>> getProductDetailsByFirstName(String firstname) {
+        List<ProductDetails> products = productRepo.findByFirstName(firstname);
+        
+        return products.stream()
+            .filter(product -> product.getAddress() != null && !product.getAddress().isEmpty())
+            .filter(product -> product.getProductCategories() != null && !product.getProductCategories().isEmpty())
+            .map(product -> {
+                Map<String, Object> productInfo = new HashMap<>();
+                productInfo.put("city", product.getAddress().get(0).getCity());
+                
+                List<Double> prices = product.getProductCategories().stream()
+                    .map(ProductCategory::getPrice)
+                    .collect(Collectors.toList());
+                productInfo.put("prices", prices);
+                
+                return productInfo;
+            })
+            .collect(Collectors.toList());
+    }
     }
 
  
