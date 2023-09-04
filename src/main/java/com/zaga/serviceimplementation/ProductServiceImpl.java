@@ -216,26 +216,28 @@ public class ProductServiceImpl implements ProductService{
     }
 
     @Override
-    public List<Document> aggregateDocuments() {
-        // TODO Auto-generated method stub
-        throw new UnsupportedOperationException("Unimplemented method 'aggregateDocuments'");
-    }
-    
+    public List<Document> aggregateDocuments(String firstname) {
+        MongoDatabase database = mongoClient.getDatabase("TestObervability");
+        MongoCollection<Document> collection = database.getCollection("ProductDetails");
 
+        List<Document> pipeline = Arrays.asList(
+            new Document("$match", new Document("firstname", "uma")),
+            new Document("$project", new Document()
+                .append("_id", 0L)
+                .append("firstname", 1L)
+                .append("lastname", 1L)
+                .append("city", new Document("$arrayElemAt", Arrays.asList("$address.city", 0L)))
+                .append("state", new Document("$arrayElemAt", Arrays.asList("$address.state", 0L)))
+                .append("name", new Document("$arrayElemAt", Arrays.asList("$productCategories.name", 0L)))
+                .append("price", new Document("$arrayElemAt", Arrays.asList("$productCategories.price", 0L)))
+            )
+        );
 
-        // @Override
-        // public List<Document> aggregateDocuments() {
-        //     MongoCollection<Document> collection = MongoClient
-        //         .getDatabase("TestObervability")
-        //         .getCollection("ProductDetails");
-    
-        //     List<Document> aggregationPipeline = new ArrayList<>(); 
-        //     aggregationPipeline.add(Document.parse("{$project: { _id: 0, firstname: 1, lastname: 1, city: {$arrayElemAt: ['$address.city', 0]}, price: {$arrayElemAt: ['$productCategories.price', 0]}}}"));
-    
-        //     return collection.aggregate(aggregationPipeline).into(new ArrayList<>());
-        // }
-    
-        }
+        List<Document> result = collection.aggregate(pipeline, Document.class).into(new ArrayList<>());
+        return result;
+       
+    }    
+ }
  
 
 

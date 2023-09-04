@@ -34,7 +34,7 @@ public interface ProductService {
 
     List<Map<String, Object>> getProductDetailsByFirstName(String firstname);
 
-    List<Document> aggregateDocuments() ;
+    List<Document> aggregateDocuments(String firstname) ;
     
   
 }

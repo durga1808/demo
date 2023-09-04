@@ -115,7 +115,7 @@ public class ProductResource {
         }
 
         @GET
-        @Path("/aggregation/{firstname}")
+        @Path("/getinfo/{firstname}")
       public List<Document> customAggregationEndpoint(@PathParam("firstname") String firstname) {
             return productService.customAggregationPipeline(firstname);
         } 
@@ -125,5 +125,11 @@ public class ProductResource {
         @Path("/getspecificinfo/{firstname}")
         public List<Map<String, Object>> getProductInfoByProductName(@PathParam("firstname") String firstname) {
             return productService.getProductDetailsByFirstName(firstname);
+        }
+
+        @GET
+        @Path("/aggregation/{firstname}")
+        public List<Document> aggregateDocuments(@PathParam("firstname") String firstname) {
+            return productService.aggregateDocuments(firstname);
         }
     }
