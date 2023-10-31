@@ -16,6 +16,9 @@ import jakarta.enterprise.context.ApplicationScoped;
 public interface ProductService {
     void createProduct(ProductDetails product);
 
+void createProductDetails(List<ProductDetails> product);
+    
+
     // void saveProductDetails(String firstname, String lastname, List<Address> addressList, List<ProductCategory> productCategories, long unixNanoTimestamp);
 
     List<ProductDetails> getallProducts();
