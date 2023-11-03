@@ -3,6 +3,7 @@ package com.zaga.kafka;
 import java.util.List;
 
 import com.zaga.model.ProductDetails;
+import com.zaga.service.ProductService;
 
 import jakarta.enterprise.context.ApplicationScoped;
 import jakarta.inject.Inject;
@@ -17,22 +18,14 @@ public class KafkaConsumer {
     @Inject
     private KafkaConsumerService kafkaConsumerService; 
 
+     @Inject 
+     private ProductService productService;
+
     @GET
     public List<ProductDetails> getProductDetails() {
-        return kafkaConsumerService.getProductDetails();
+        List<ProductDetails> product = kafkaConsumerService.getProductDetails();
+        productService.createProductDetails(product);
+        return product;
     }
 }
-// public class KafkaConsumer {
-//     @Incoming("product")
-//     public void consumeData(String jsonData) {
-//         ProductDetails data = deserializeJson(jsonData);
-
-//         System.out.println("Received data: " + data);
-//     }
-
-//     private ProductDetails deserializeJson(String jsonData) {
-       
-
-//         return null; 
-//     }
 

@@ -1,6 +1,7 @@
 package com.zaga.kafka;
 
 import com.zaga.model.ProductDetails;
+import com.zaga.service.ProductService;
 
 import jakarta.enterprise.context.ApplicationScoped;
 import jakarta.inject.Inject;
@@ -22,9 +23,12 @@ public class KafkaProducer {
     @Inject
     private KafkaProducerService kafkaProducerService;
 
+   
+ 
     @POST
     public Response sendProductDetails(ProductDetails productDetails) {
         kafkaProducerService.sendProductDetails(productDetails);
+      
         return Response.ok().build();
     }
 }

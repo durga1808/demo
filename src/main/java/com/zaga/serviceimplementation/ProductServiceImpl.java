@@ -41,7 +41,7 @@ public class ProductServiceImpl implements ProductService{
     @Inject
     MongoClient mongoClient;
     
-    @Override
+  @Override
   public void createProduct(ProductDetails product) {
        
         String unixNanoTimeStr = product.getTime();
@@ -236,7 +236,39 @@ public class ProductServiceImpl implements ProductService{
         List<Document> result = collection.aggregate(pipeline, Document.class).into(new ArrayList<>());
         return result;
        
-    }    
+    }
+
+
+    @Override
+    public void createProductDetails(List<ProductDetails> productList) {
+        for (ProductDetails product : productList) {
+            String unixNanoTimeStr = product.getTime();
+    
+            try {
+                long unixNanoTime = Long.parseLong(unixNanoTimeStr);
+    
+                // Convert Unix nanoseconds to ZonedDateTime with UTC time zone
+                Instant instant = Instant.ofEpochSecond(0, unixNanoTime);
+                ZonedDateTime utcDateTime = ZonedDateTime.ofInstant(instant, ZoneId.of("UTC"));
+    
+                // Convert UTC time to "Asia/Kolkata" time zone
+                ZonedDateTime istDateTime = utcDateTime.withZoneSameInstant(ZoneId.of("Asia/Kolkata"));
+    
+                // Format the date-time as a string
+                DateTimeFormatter formatter = DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm:ss z");
+                String formattedDateTime = istDateTime.format(formatter);
+    
+                // Set the formatted time back to the product
+                product.setTime(formattedDateTime);
+    
+                // Persist the product details in your repository (assuming productRepo is your repository)
+                productRepo.persist(product);
+            } catch (NumberFormatException e) {
+                System.err.println("Invalid Unix nanotime format: " + unixNanoTimeStr);
+            }
+        }
+    }
+    
  }
  
 
