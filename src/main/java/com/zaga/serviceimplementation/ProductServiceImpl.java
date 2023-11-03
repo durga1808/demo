@@ -221,7 +221,7 @@ public class ProductServiceImpl implements ProductService{
         MongoCollection<Document> collection = database.getCollection("ProductDetails");
 
         List<Document> pipeline = Arrays.asList(
-            new Document("$match", new Document("firstname", "uma")),
+            new Document("$match", new Document("firstname", firstname)),
             new Document("$project", new Document()
                 .append("_id", 0L)
                 .append("firstname", 1L)
