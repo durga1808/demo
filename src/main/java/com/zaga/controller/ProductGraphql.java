@@ -14,6 +14,7 @@ import jakarta.inject.Inject;
 @GraphQLApi
 public class ProductGraphql {
     
+    
     @Inject
     ProductService productService;
 
