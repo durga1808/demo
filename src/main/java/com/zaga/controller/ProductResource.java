@@ -4,6 +4,7 @@ import java.util.List;
 import java.util.Map;
 
 import org.bson.Document;
+import org.eclipse.microprofile.openapi.annotations.parameters.RequestBody;
 
 import com.zaga.model.ProductDetails;
 import com.zaga.repository.ProductRepo;
@@ -31,17 +32,17 @@ public class ProductResource {
     @Inject
     ProductService productService;
     
-    @POST
-    @Path("/create")
-    public Response createProduct(ProductDetails product) {
-        try {
-            //System.out.println("----------------");
-            productService.createProduct(product);
-            return Response.status(200).entity(product).build();
-        } catch (Exception e) {
-            return Response.status(500).entity(e.getMessage()).build();
-        }
-    }
+    // @POST
+    // @Path("/create")
+    // public Response createProduct(ProductDetails product) {
+    //     try {
+    //         //System.out.println("----------------");
+    //         productService.createProduct(product);
+    //         return Response.status(200).entity(product).build();
+    //     } catch (Exception e) {
+    //         return Response.status(500).entity(e.getMessage()).build();
+    //     }
+    // }
 
     // @POST
     // @Path("/create/{timeUnixNano}")
@@ -65,6 +66,19 @@ public class ProductResource {
     //         return Response.status(500).entity(e.getMessage()).build();
     //     }
     // }
+
+ @POST
+ @Path("/create")
+ public Response  saveProduct(@RequestBody ProductDetails productDetails) {
+        productService.saveProductDetails(
+            productDetails.getFirstname(),
+            productDetails.getLastname(),
+            productDetails.getAddress(),
+            productDetails.getProductCategories()
+        );
+        return Response.status(200).entity(productDetails).build();
+    }
+
 
     @GET
     @Path("/listallproductdetails")

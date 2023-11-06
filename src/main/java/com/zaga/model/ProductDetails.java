@@ -25,5 +25,5 @@ public class ProductDetails extends PanacheMongoEntity{
     public String lastname;
     public List<Address> address;
     public List<ProductCategory> productCategories;
-    public String time;
+    //public String time;
 }

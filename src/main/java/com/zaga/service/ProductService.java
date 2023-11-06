@@ -14,12 +14,12 @@ import jakarta.enterprise.context.ApplicationScoped;
 
 @ApplicationScoped
 public interface ProductService {
-    void createProduct(ProductDetails product);
+    //void createProduct(ProductDetails product);
 
-void createProductDetails(List<ProductDetails> product);
+//void createProductDetails(List<ProductDetails> product);
     
 
-    // void saveProductDetails(String firstname, String lastname, List<Address> addressList, List<ProductCategory> productCategories, long unixNanoTimestamp);
+    void saveProductDetails(String firstname, String lastname, List<Address> addressList, List<ProductCategory> productCategories);
 
     List<ProductDetails> getallProducts();
 

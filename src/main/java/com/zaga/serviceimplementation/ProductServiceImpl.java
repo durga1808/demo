@@ -41,50 +41,50 @@ public class ProductServiceImpl implements ProductService{
     @Inject
     MongoClient mongoClient;
     
-  @Override
-  public void createProduct(ProductDetails product) {
+//   @Override
+//   public void createProduct(ProductDetails product) {
        
-        String unixNanoTimeStr = product.getTime();
+//         String unixNanoTimeStr = product.getTime();
 
-        try {
+//         try {
            
-            long unixNanoTime = Long.parseLong(unixNanoTimeStr);
+//             long unixNanoTime = Long.parseLong(unixNanoTimeStr);
 
         
-            Instant instant = Instant.ofEpochSecond(0, unixNanoTime); 
-            ZonedDateTime utcDateTime = ZonedDateTime.ofInstant(instant, ZoneId.of("UTC"));
+//             Instant instant = Instant.ofEpochSecond(0, unixNanoTime); 
+//             ZonedDateTime utcDateTime = ZonedDateTime.ofInstant(instant, ZoneId.of("UTC"));
 
             
-            ZonedDateTime istDateTime = utcDateTime.withZoneSameInstant(ZoneId.of("Asia/Kolkata"));
+//             ZonedDateTime istDateTime = utcDateTime.withZoneSameInstant(ZoneId.of("Asia/Kolkata"));
 
-        DateTimeFormatter formatter = DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm:ss z");
+//         DateTimeFormatter formatter = DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm:ss z");
 
         
-        String formattedDateTime = istDateTime.format(formatter);
-            product.setTime(formattedDateTime); 
+//         String formattedDateTime = istDateTime.format(formatter);
+//             product.setTime(formattedDateTime); 
 
-            productRepo.persist(product);
-        } catch (NumberFormatException e) {
-            System.err.println("Invalid Unix nanotime format: " + unixNanoTimeStr);
-        }
-    }
+//             productRepo.persist(product);
+//         } catch (NumberFormatException e) {
+//             System.err.println("Invalid Unix nanotime format: " + unixNanoTimeStr);
+//         }
+//     }
 
     
-    // @Override
-    // public void saveProductDetails(String firstname, String lastname, List<Address> addressList, List<ProductCategory> productCategories, long unixNanoTimestamp) {
+    @Override
+    public void saveProductDetails(String firstname, String lastname, List<Address> addressList, List<ProductCategory> productCategories) {
 
-    //     // Convert the Unix nano timestamp to IST
-    //     LocalDateTime istTime = convertUnixNanoToIST(unixNanoTimestamp);
+        // Convert the Unix nano timestamp to IST
+        //LocalDateTime istTime = convertUnixNanoToIST(unixNanoTimestamp);
 
-    //     ProductDetails productDetails = new ProductDetails();
-    //     productDetails.setFirstname(firstname);
-    //     productDetails.setLastname(lastname);
-    //     productDetails.setAddress(addressList);
-    //     productDetails.setProductCategories(productCategories);
-    //     // Set the IST LocalDateTime
-    //     productDetails.setTime(istTime);
-    //     productDetails.persist(); // This will persist the entity to the MongoDB database
-    // }
+        ProductDetails productDetails = new ProductDetails();
+        productDetails.setFirstname(firstname);
+        productDetails.setLastname(lastname);
+        productDetails.setAddress(addressList);
+        productDetails.setProductCategories(productCategories);
+        // Set the IST LocalDateTime
+       // productDetails.setTime(istTime);
+        productDetails.persist(); // This will persist the entity to the MongoDB database
+    }
 
     // private LocalDateTime convertUnixNanoToIST(LocalDateTime localDateTime) {
     //     Instant instant = Instant.ofEpochSecond(localDateTime / 1_000_000_000, localDateTime % 1_000_000_000);
@@ -101,17 +101,17 @@ public class ProductServiceImpl implements ProductService{
     public List<ProductDetails> getallProducts() {
         List<ProductDetails> allProducts = productRepo.listAll();
 
-        // Convert the timestamp strings in each ProductDetails object to IST and store as strings
-        ZoneId istZone = ZoneId.of("Asia/Kolkata");
-        DateTimeFormatter formatter = DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm:ss z");
+        // // Convert the timestamp strings in each ProductDetails object to IST and store as strings
+        // ZoneId istZone = ZoneId.of("Asia/Kolkata");
+        // DateTimeFormatter formatter = DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm:ss z");
 
-        allProducts.forEach(product -> {
-            String timestampString = product.getTime(); // Assuming ProductDetails has a method to get the timestamp string
-            ZonedDateTime utcDateTime = ZonedDateTime.parse(timestampString, formatter);
-            ZonedDateTime istDateTime = utcDateTime.withZoneSameInstant(istZone);
-            String istDateTimeString = istDateTime.format(formatter); // Convert to IST and format as a string
-            product.setTime(istDateTimeString); // Update the timestamp string in the ProductDetails object
-        });
+        // allProducts.forEach(product -> {
+        //     String timestampString = product.getTime(); // Assuming ProductDetails has a method to get the timestamp string
+        //     ZonedDateTime utcDateTime = ZonedDateTime.parse(timestampString, formatter);
+        //     ZonedDateTime istDateTime = utcDateTime.withZoneSameInstant(istZone);
+        //     String istDateTimeString = istDateTime.format(formatter); // Convert to IST and format as a string
+        //     product.setTime(istDateTimeString); // Update the timestamp string in the ProductDetails object
+        // });
 
         return allProducts;
     }
@@ -239,35 +239,35 @@ public class ProductServiceImpl implements ProductService{
     }
 
 
-    @Override
-    public void createProductDetails(List<ProductDetails> productList) {
-        for (ProductDetails product : productList) {
-            String unixNanoTimeStr = product.getTime();
+    // @Override
+    // public void createProductDetails(List<ProductDetails> productList) {
+    //     for (ProductDetails product : productList) {
+    //         String unixNanoTimeStr = product.getTime();
     
-            try {
-                long unixNanoTime = Long.parseLong(unixNanoTimeStr);
+    //         try {
+    //             long unixNanoTime = Long.parseLong(unixNanoTimeStr);
     
-                // Convert Unix nanoseconds to ZonedDateTime with UTC time zone
-                Instant instant = Instant.ofEpochSecond(0, unixNanoTime);
-                ZonedDateTime utcDateTime = ZonedDateTime.ofInstant(instant, ZoneId.of("UTC"));
+    //             // Convert Unix nanoseconds to ZonedDateTime with UTC time zone
+    //             Instant instant = Instant.ofEpochSecond(0, unixNanoTime);
+    //             ZonedDateTime utcDateTime = ZonedDateTime.ofInstant(instant, ZoneId.of("UTC"));
     
-                // Convert UTC time to "Asia/Kolkata" time zone
-                ZonedDateTime istDateTime = utcDateTime.withZoneSameInstant(ZoneId.of("Asia/Kolkata"));
+    //             // Convert UTC time to "Asia/Kolkata" time zone
+    //             ZonedDateTime istDateTime = utcDateTime.withZoneSameInstant(ZoneId.of("Asia/Kolkata"));
     
-                // Format the date-time as a string
-                DateTimeFormatter formatter = DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm:ss z");
-                String formattedDateTime = istDateTime.format(formatter);
+    //             // Format the date-time as a string
+    //             DateTimeFormatter formatter = DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm:ss z");
+    //             String formattedDateTime = istDateTime.format(formatter);
     
-                // Set the formatted time back to the product
-                product.setTime(formattedDateTime);
+    //             // Set the formatted time back to the product
+    //             product.setTime(formattedDateTime);
     
-                // Persist the product details in your repository (assuming productRepo is your repository)
-                productRepo.persist(product);
-            } catch (NumberFormatException e) {
-                System.err.println("Invalid Unix nanotime format: " + unixNanoTimeStr);
-            }
-        }
-    }
+    //             // Persist the product details in your repository (assuming productRepo is your repository)
+    //             productRepo.persist(product);
+    //         } catch (NumberFormatException e) {
+    //             System.err.println("Invalid Unix nanotime format: " + unixNanoTimeStr);
+    //         }
+    //     }
+    // }
     
  }
  
