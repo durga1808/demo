@@ -4,9 +4,14 @@ import java.util.List;
 
 import org.eclipse.microprofile.graphql.Description;
 import org.eclipse.microprofile.graphql.GraphQLApi;
+import org.eclipse.microprofile.graphql.Mutation;
+import org.eclipse.microprofile.graphql.Name;
 import org.eclipse.microprofile.graphql.Query;
 
+import com.zaga.model.Address;
+import com.zaga.model.ProductCategory;
 import com.zaga.model.ProductDetails;
+import com.zaga.service.ProductDetailsServiceQl;
 import com.zaga.service.ProductService;
 
 import jakarta.inject.Inject;
@@ -14,13 +19,23 @@ import jakarta.inject.Inject;
 @GraphQLApi
 public class ProductGraphql {
     
-    
     @Inject
-    ProductService productService;
+    ProductDetailsServiceQl productDetailsService;
 
-    @Query("allProducts")
-    @Description("Get all products.")
-    public List<ProductDetails> getAllProducts() {
-        return productService.getallProducts();
-    } 
+    @Query("getAllProductDetails")
+    public List<ProductDetails> getAllProductDetails() {
+        return productDetailsService.getAllProductDetails();
+    }
+
+    @Mutation
+    public ProductDetails createProductDetails(
+            @Name("firstname") String firstname,
+            @Name("lastname") String lastname,
+            @Name("address") List<Address> address,
+            @Name("productCategories") List<ProductCategory> productCategories
+    ) {
+        ProductDetails productDetails = new ProductDetails(firstname, lastname, address, productCategories);
+        productDetailsService.addProductDetails(productDetails);
+        return productDetails;
+    }
 }
