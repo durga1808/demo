@@ -1,6 +1,7 @@
 package com.zaga.controller;
 
 import java.util.List;
+import java.util.Map;
 
 import org.bson.Document;
 import org.eclipse.microprofile.graphql.Description;
@@ -47,7 +48,7 @@ public class ProductGraphql {
     }
 
     @Query
-     public List<Document> aggregateDocuments(@PathParam("firstname") String firstname) {
-            return productDetailsService.aggregateDocuments(firstname);
+    public List<Map<String, Object>> getProductInfoByProductName(@PathParam("firstname") String firstname) {
+            return productDetailsService.getProductDetailsByFirstName(firstname);
         }
 }
