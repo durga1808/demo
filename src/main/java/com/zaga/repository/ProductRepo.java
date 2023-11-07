@@ -57,5 +57,11 @@ public class ProductRepo implements PanacheMongoRepository<ProductDetails> {
     //     ))
     //     .into(new ArrayList<>());
     // }
+
+
+    public List<ProductDetails> findByKeyword(String keyword) {
+        return list("{'$or':[ {'firstname': { $regex: ?1, $options: 'i' }}, {'address.city': { $regex: ?1, $options: 'i' }}, {'productCategories.name': { $regex: ?1, $options: 'i' }}]}", keyword);
+    }
+    
 }
 

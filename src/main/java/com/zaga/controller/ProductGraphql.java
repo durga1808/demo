@@ -1,7 +1,9 @@
 package com.zaga.controller;
 
 import java.util.List;
+import java.util.Map;
 
+import org.bson.Document;
 import org.eclipse.microprofile.graphql.Description;
 import org.eclipse.microprofile.graphql.GraphQLApi;
 import org.eclipse.microprofile.graphql.Mutation;
@@ -16,6 +18,7 @@ import com.zaga.service.ProductDetailsServiceQl;
 import com.zaga.service.ProductService;
 
 import jakarta.inject.Inject;
+import jakarta.ws.rs.PathParam;
 
 @GraphQLApi
 public class ProductGraphql {
@@ -41,5 +44,14 @@ public class ProductGraphql {
         ProductDetails productDetails = new ProductDetails(firstname, lastname, address, productCategories);
         productDetailsService.addProductDetails(productDetails);
         return productDetails;
+    }
+
+    @Query
+      public List<ProductDetails> getByFirstName(@PathParam("firstName") String firstName) {
+       return productDetailsService.getByFirstName(firstName);
+    }
+    @Query
+    public List<ProductDetails> searchProductDetails(@Name("searchKeyword") String searchKeyword) {
+      return productDetailsService.searchProductDetails(searchKeyword);
     }
 }
