@@ -11,6 +11,7 @@ import org.eclipse.microprofile.graphql.Query;
 import com.zaga.model.Address;
 import com.zaga.model.ProductCategory;
 import com.zaga.model.ProductDetails;
+import com.zaga.repository.ProductRepo;
 import com.zaga.service.ProductDetailsServiceQl;
 import com.zaga.service.ProductService;
 
@@ -18,7 +19,10 @@ import jakarta.inject.Inject;
 
 @GraphQLApi
 public class ProductGraphql {
-    
+    @Inject
+    ProductRepo productRepo;
+
+
     @Inject
     ProductDetailsServiceQl productDetailsService;
 

@@ -4,18 +4,26 @@ import java.util.ArrayList;
 import java.util.List;
 
 import com.zaga.model.ProductDetails;
+import com.zaga.repository.ProductRepo;
 
 import jakarta.enterprise.context.ApplicationScoped;
+import jakarta.inject.Inject;
 
 @ApplicationScoped
 public class ProductDetailsServiceQl {
-      List<ProductDetails> productDetailsList = new ArrayList<>();
+
+    @Inject
+    ProductRepo productRepo;
+      List<ProductDetails> productDetails = new ArrayList<>();
 
     public List<ProductDetails> getAllProductDetails() {
-        return productDetailsList;
+        List<ProductDetails> allProducts = productRepo.listAll();
+        return allProducts;
     }
 
+   
+
     public void addProductDetails(ProductDetails productDetails) {
-        productDetailsList.add(productDetails);
+        productRepo.persist(productDetails);
     }
 }
