@@ -47,8 +47,4 @@ public class ProductGraphql {
        return productDetailsService.getByFirstName(firstName);
     }
 
-    @Query
-    public List<Map<String, Object>> getProductInfoByProductName(@PathParam("firstname") String firstname) {
-            return productDetailsService.getProductDetailsByFirstName(firstname);
-        }
 }
