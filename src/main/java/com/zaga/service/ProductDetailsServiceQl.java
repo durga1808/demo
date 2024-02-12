@@ -8,9 +8,13 @@ import com.zaga.repository.ProductRepo;
 import io.quarkus.mongodb.panache.PanacheQuery;
 import io.quarkus.panache.common.Parameters;
 import jakarta.enterprise.context.ApplicationScoped;
+import jakarta.inject.Inject;
 
 @ApplicationScoped
 public class ProductDetailsServiceQl {
+
+    @Inject
+    ProductRepo productRepo;
       List<ProductDetails> productDetailsList = new ArrayList<>();
 
     public List<ProductDetails> getAllProductDetails() {
@@ -34,5 +38,16 @@ public class ProductDetailsServiceQl {
         return productRepo.findByKeyword(keyword);
     }
   
+    // public List<ProductDetails> modifyproductdetails(String firstName, String  lastName,  addressList,String productcat){
 
+    // }
+
+
+
+    public List<ProductDetails> findFirstnameToCity(String firstName, String city){
+        return productRepo.findByFirstName(firstName);
+    }
 }
+
+
+
